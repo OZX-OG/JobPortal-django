@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Details: {% endblock title %}
+
+{% block content %}
+
+<main>
+    <div class="job-post-company pt-120 pb-120">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-xl-7 col-lg-8">
+                    <div class="single-job-items mb-50">
+                        <div class="job-items">
+                            <div class="company-img company-img-details">
+                                <a target="_blank" href="{{ job.company_url }}"><img src="{{ job.image_url }}" alt="{{ job.title }}"></a>
+                            </div>
+                            <div class="job-tittle">
+                                <a href="#">
+                                    <h4>{{ job.title }}</h4>
+                                </a>
+                                <ul>
+                                    <li>{{ job.company }}</li>
+                                    <li><i class="fas fa-map-marker-alt"></i>
+                                        {% for location in job.location.all %}
+                                            {{ location }}
+                                        {% endfor %}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="job-post-details" style="color: #d1cdc7;">
+                        <div class="post-details2 mb-50">
+                            {{ job.description|safe }}
+                        </div>
+                    </div>
+                    <div class="apply-btn2" id="apply_btn">
+                        <a target="_blank" href="{{ job.job_link }}" class="btn">Apply Now</a>
+                    </div>
+                </div>
+                
+                <div class="col-xl-4 col-lg-4">
+                    <div class="post-details3  mb-50">
+                        <div class="small-section-tittle">
+                            <h4>Job Overview</h4>
+                        </div>
+                        <ul>
+                            {% if job.post_date %}
+                                <li>Posted date : <span>{{ job.post_date }}</span></li>
+                            {% endif %}
+                            <li>Posted add : <span>{{ job.publish | date:"M j, Y" }}</span></li>
+                            {% if job.applications %}
+                                <li>Applications : <span>{{ job.applications }}</span></li>
+                            {% endif %}
+                            <li>Salary :  <span>{{ job.salary }}</span></li>
+                            {% if job.seniority_level %}
+                                <li>Seniority level : <span>{{ job.seniority_level }}</span></li>
+                            {% endif %}
+                            
+                            {% if job.employment_type %}
+                                <li>Employment type : <span>{{ job.employment_type }}</span></li>
+                            {% endif %}
+                            
+                            {% if job.Industries %}
+                                <li>Industries : <span>{{ job.Industries }}</span></li>
+                            {% endif %}
+                            <li>Source : <span>
+                                {% for source in job.source.all %}
+                                    {{ source }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </span></li>
+
+                        </ul>
+
+                        <div class="d-flex bd-highlight mb-3">
+                            <a target="_blank" href="{{ job.job_link }}" class="btn">Apply Now</a>
+                            <a target="_blank" href="{{ job.job_link }}" class="btn">Report Job</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
+{% block sign_scripts %} 
+
+<script>
+    function checkResolution() {
+      var div = document.getElementById('apply_btn');
+      if (window.innerWidth < 992) { // Change 600 to your desired resolution
+        div.style.display = 'none';
+      } else {
+        div.style.display = 'block';
+      }
+    }
+    
+    // Initial check
+    checkResolution();
+    
+    // Check on window resize
+    window.addEventListener('resize', checkResolution);
+</script>
+
+{% endblock sign_scripts %}

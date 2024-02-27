@@ -1,0 +1,432 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}Django Job{% endblock title %}
+
+{% block content %}
+
+<style>
+    .result {
+
+        display: inline-block;
+        outline: none;
+        line-height: 40px;
+        padding: 0 30px;
+        font-size: .8em;
+        text-align: center;
+        text-decoration: none;
+        font-weight: 500;
+        cursor: pointer;
+        -webkit-transition: all 0.3s ease 0s;
+        -moz-transition: all 0.3s ease 0s;
+        -o-transition: all 0.3s ease 0s;
+        transition: all 0.3s ease 0s;
+        
+        color: #fff;
+        background: #00b579;
+        border: 1px solid transparent;
+        border-radius: 25px;
+    }
+    .result:hover {
+        color: #00b579;
+        border: 1px solid #00b579;
+        background: #fff;
+    }
+</style>
+
+<main>
+    <div class="slider-area ">
+        <!-- Mobile Menu -->
+        <div class="slider-active">
+            <!-- <div class="single-slider slider-height d-flex align-items-center" data-background="{% static 'img/hero/h1_hero.png' %}"> -->
+            <div class="single-slider slider-height d-flex align-items-center"
+                style="width: 2114px; position: relative; left: 0px; top: 0px; z-index: 999; opacity: 1; background-image: url(&quot;{% static 'img/hero/h1_hero.png' %}&quot;);">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-9 col-md-10">
+                            <div class="hero__caption">
+                                <h1>Find Your Django Dream Job.</h1>
+                                <h2>Don't waste any
+                                    minute and sign up for our Newsletter and get access to the top highest paying
+                                    Django jobs and join our community of +1000 Django developers.</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Search Box -->
+                    <form action="#" method="POST" id="myForm" class="search-box">
+                        {% csrf_token %}
+                        <div class="input-form">
+                            <input type="text" name="email" placeholder="Enter Your Email For Any New JobPost">
+                        </div>
+                        <div class="search-form">
+                            <a href onclick="document.getElementById('myForm').submit();">
+                                <img src="{% static 'img/icon/form.png' %}" alt="send" style="margin-top: 30%; margin-left: 30%;" >
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Job List Area Start -->
+    <div class="job-listing-area pt-120 pb-120">
+        <div class="container">
+            <div class="row">
+                <!-- Left content -->
+                
+                <form class="col-xl-3 col-lg-3 col-md-4" action="" method="get">
+                    <!-- <div class="col-xl-3 col-lg-3 col-md-4"> -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="small-section-tittle2 mb-45">
+                                    <div class="ion"> <svg xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="20px" height="12px">
+                                            <path fill-rule="evenodd" fill="rgb(27, 207, 107)"
+                                                d="M7.778,12.000 L12.222,12.000 L12.222,10.000 L7.778,10.000 L7.778,12.000 ZM-0.000,-0.000 L-0.000,2.000 L20.000,2.000 L20.000,-0.000 L-0.000,-0.000 ZM3.333,7.000 L16.667,7.000 L16.667,5.000 L3.333,5.000 L3.333,7.000 Z" />
+                                        </svg>
+                                    </div>
+                                    <h4>Filter Jobs</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Job Category Listing start -->
+                        <div class="job-category-listing mb-50">
+                            <!-- <div class="single-listing pb-50">
+                                <div class="button-group-area">
+                                    <button type="submit" class="result">Show Result</button>
+                                </div>
+                            </div> -->
+                            <div class="single-listing">
+                                <!-- select-Categories start -->
+                                <div class="select-Categories pb-50">
+                                    <div class="small-section-tittle2">
+                                        <h4>Search</h4>
+                                    </div>
+                                    <div class="input-group-icon mt-10">
+                                        <div class="icon"><i class="fa fa-search" aria-hidden="true"></i></div>
+                                        <input type="text" name="search" placeholder="Search " onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Search Like: RESTful API'" class="single-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- single one -->
+                            <div class="single-listing">
+                                <div class="small-section-tittle2">
+                                    <h4>Job Location</h4>
+                                </div>
+                                <!-- Select job items start -->
+                                <div class="select-job-items2">
+                                    <select name="location">
+                                        {% if request.GET.location %}
+                                            <option value="{{request.GET.location}}">{{request.GET.location|title}}</option>
+                                        {% else %}
+                                            <option value="anywhere">Anywhere</option>
+                                        {% endif %}
+                                        
+                                        {% for loca in locations%}
+                                            {% if request.GET.location|lower|slugify == loca|lower|slugify  %}
+                                                <option value="anywhere">Anywhere</option>
+                                            {% else %}
+                                                <option value="{{loca}}">{{loca|title}}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <!--  Select job items End-->
+                                <!-- select-Categories start -->
+                                <div class="select-Categories pt-80 pb-50">
+                                    <div class="small-section-tittle2">
+                                        <h4>Job Type</h4>
+                                    </div>
+                                    <label class="container" >Full Time
+                                        <input type="checkbox" name="full_time" {% if request.GET.full_time %}checked="active checked"{% endif %} >
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="container">Part Time
+                                        <input type="checkbox" name="part_time" {% if request.GET.part_time %}checked="active checked"{% endif %} >
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="container">Remote
+                                        <input type="checkbox" name="remote" {% if request.GET.remote %}checked="active checked"{% endif %} >
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="container">Contract
+                                        <input type="checkbox" name="contract" {% if request.GET.contract %}checked="active checked"{% endif %} >
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="container">Internship
+                                        <input type="checkbox" name="internship" {% if request.GET.internship %}checked="active checked"{% endif %} >
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <!-- select-Categories End -->
+                            </div>
+                            <div class="single-listing">
+                                <div class="select-Categories pb-50">
+                                    <div class="small-section-tittle2">
+                                        <h4>Scource</h4>
+                                    </div>
+                                    <label class="container">Linkedin
+                                        <input type="checkbox" name="linkedin" {% if request.GET.linkedin %}checked="active checked"{% endif %} >
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="container">Indeed
+                                        <input type="checkbox" name="indeed" {% if request.GET.indeed %}checked="active checked"{% endif %} >
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- single two -->
+                            <div class="single-listing">
+                                <div class="select-Categories pb-50">
+                                    <div class="small-section-tittle2">
+                                        <h4>Experience</h4>
+                                    </div>
+                                    <label class="container">1-2 Years
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="container">2-3 Years
+                                        <input type="checkbox" checked="checked active">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="container">3-6 Years
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="container">6-more..
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <!-- select-Categories End -->
+                            </div>
+                            <!-- single three -->
+
+
+
+                            <div class="single-listing ">
+                                <div class="button-group-area">
+                                    <button type="submit" class="result">Show Result</button>
+                                </div>
+                            </div>
+                        </div>
+                </form>
+
+
+
+                <div class="col-xl-9 col-lg-9 col-md-8">
+                    <section class="featured-job-area">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="count-job mb-35">
+                                        <span>{{ jobs_count }} Jobs found</span>
+                                        <!-- <div class="select-job-items"> -->
+                                        <form id="sort-form" class="select-job-items" method="get" >
+                                            <span>Sort by</span>
+                                            <select id="sort-select" name="sort">
+                                                {% if request.GET.sort == 'nto' or request.GET.sort == none %}
+                                                    <option value="nto">New To Old</option>
+                                                    <option value="otn">Old To New</option>
+                                                {% elif request.GET.sort == 'otn' %}
+                                                    <option value="otn">Old To New</option>
+                                                    <option value="nto">New To Old</option>
+                                                {% endif %}
+                                                <!-- <option value="otn">{{request.GET.sort}}</option> -->
+                                            </select>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% if not jobs_count %}
+                                <div class="pt-50 d-flex justify-content-center" >
+                                    <h2>Seems Theres No Job Here</h2>
+                                </div>
+                                <div class="d-flex justify-content-center" >
+                                    <h5>try Add New Filters. Or contract Me about the issue</h5>
+                                </div>
+                                <div class="pt-10 d-flex justify-content-center">
+                                    <h5>example@example.com</h5>
+                                </div>
+                            {% endif %}
+                            <!-- <li><i class="fas fa-map-marker-alt"></i>
+                                {% for location in job.location.all %}
+                                    {{ location|title }}
+                                {% endfor %}
+                            </li> -->
+                            {% for job in page.object_list %}
+                                <div class="single-job-items mb-30">
+                                    <div class="job-items">
+                                        <div class="company-img">
+                                            <a href="{{ job.company_url }}"> 
+                                                <img src="{{ job.image_url }}" alt="{{ job.title }}">
+                                            </a>
+                                        </div>
+                                        <div class="job-tittle job-tittle2">
+                                            <a href="#">
+                                                <h4><a href="{% url 'job_details' slug=job.slug %}">{{ job.title|truncate_chars:50 }}</a>
+                                                </h4>
+                                            </a>
+                                            <ul>
+                                                <li><i class="fas fa-building"></i>{{ job.company|truncate_chars:22 }}</li>
+                                                <li><i class="fas fa-map-marker-alt"></i>{{ job.specific_location }}</li>
+
+                                                {% if not job.salary == 'Not specified' %}
+                                                    <li><i class="fas fa-dollar-sign"></i>{{ job.salary }}</li>
+                                                {% endif %}
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="items-link items-link2 f-right">
+                                        <a href="{% url 'job_details' slug=job.slug %}">{{ job.employment_type }}</a>
+                                        <span>{{ job.publish | date:"M j, Y" }}</span>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+
+
+                        </div>
+                    </section>
+                    <!-- Featured_job_end -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Job List Area End -->
+
+    {% if page.paginator.num_pages != 1 %}
+    <!--Pagination Start  -->
+    <div class="pagination-area pb-115 text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="single-wrap d-flex justify-content-center">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-start">
+
+                                {% if page.has_previous %}                                
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                                        <span class="ti-angle-left"></span>
+                                    </a>
+                                </li>
+
+                                {% endif %}             
+
+                                {% if page.number|add:'-2' > 1 %}
+                                    <li class="page-item "><a class="page-link" href="?page=1{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">1</a></li>
+                                    <li class="page-item ">
+                                        <a href="?page={{ page.number|add:'-2' }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="page-link">&hellip;</a>
+                                    </li>
+                                {% endif %}
+
+                                {% for num_page in page.paginator.page_range %}                                
+                                    {% if page.number == num_page %}          
+                                        <li class="page-item active">
+                                            <a href="?page={{ num_page }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="page-link">{{ num_page }}</a>
+                                        </li>
+                                    {% elif num_page > page.number|add:'-2' and num_page < page.number|add:'2' %}                                
+                                        <li class="page-item">
+                                            <a href="?page={{ num_page }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="page-link">{{ num_page }}</a>
+                                        </li>
+                                    {% endif %}                                
+                                {% endfor %}   
+                                
+                                {% if page.paginator.num_pages > page.number|add:'2' %}
+                
+                                    <li class="page-item ">
+                                        <a href="?page={{ page.number|add:'2' }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="page-link">&hellip;</a>
+                                    </li>
+
+                                    <li class="page-item ">
+                                        <a href="?page={{ page.paginator.num_pages }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="page-link">{{page.paginator.num_pages}}</a>
+                                    </li>
+                                
+                                {% endif %}
+
+
+                                {% if page.has_next %}                                
+                                    <li class="page-item"><a class="page-link" href="?page={{ page.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"><span
+                                            class="ti-angle-right"></span></a></li>
+                                {% endif %}                                
+
+
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Pagination End  -->
+    {% endif %}
+
+</main>
+
+{% endblock %}
+
+
+
+
+{% block sign_scripts %} 
+
+<script>
+    // console.log(`selectedValue: ${selectedValue}`)
+        // Function to get query parameters from URL
+        function getUrlParameter(name) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+            const results = regex.exec(window.location.href);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+    
+        // Get the form element
+        const form = document.getElementById('sort-form');
+    
+        // Get the list of options
+        const options = form.querySelectorAll('.option');
+    
+        // Add event listener to each option
+        options.forEach(option => {
+            option.addEventListener('click', function() {
+                // Get the data-value attribute of the clicked option
+                const value = this.getAttribute('data-value');
+    
+                // Remove existing sort parameter if present
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                if (urlParams.has('sort')) {
+                    urlParams.delete('sort');
+                }
+    
+                // Add the new sort parameter
+                urlParams.append('sort', value);
+    
+                // Build the new URL
+                const newUrl = window.location.pathname + '?' + urlParams.toString();
+    
+                // Redirect to the new URL
+                window.location.href = newUrl;
+            });
+        });
+    
+        // Set the initial selected option based on the query parameter
+        const sortValue = getUrlParameter('sort');
+        if (sortValue) {
+            const selectedOption = form.querySelector('.option[data-value="' + sortValue + '"]');
+            if (selectedOption) {
+                selectedOption.classList.add('selected', 'focus');
+                selectedOption.parentElement.querySelector('.current').innerText = selectedOption.innerText;
+            }
+        }
+</script>
+{% endblock sign_scripts %}
+
