@@ -15,6 +15,9 @@
     <a href="https://python.org/" alt="Python">
         <img src="https://img.shields.io/badge/-Python3-F7D756.svg?style=for-the-badge&logo=python"/>
     </a>
+    <a href="https://www.selenium.dev/" alt="selenium">
+        <img src="https://img.shields.io/badge/selenium-00AE00.svg?style=for-the-badge&logo=selenium&logoColor=white"/>
+    </a>
 </p>
 
 This Django-based job portal aggregates Django-related job listings from Indeed and LinkedIn using Selenium for web scraping. Focused solely on Django jobs, the portal streamlines the job search process. Additionally, it includes a RESTful API for programmatically accessing job data.
