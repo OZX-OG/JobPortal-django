@@ -170,5 +170,15 @@ Feel free to submit pull requests or open issues for any enhancements or bug fix
 
 ## Acknowledgements
 
-- Special thanks to the developers of Django, Selenium, Indeed, and LinkedIn for their contributions and APIs that made this project possible.
-- Thanks to the open-source community for their continuous support and valuable feedback.
+We would like to express our gratitude to the following individuals and organizations for their contributions and support:
+
+- **Django Community**: Thank you to the Django community for providing an excellent web framework that powers this project.
+
+- **Selenium Project**: We extend our appreciation to the Selenium project for their powerful tool that enables automated web testing and scraping.
+
+- **Railway**: Special thanks to Railway for providing a Redis instance for one day, which greatly facilitated our task of setting up Celery for asynchronous task processing.
+
+
+## 📝 License
+
+- [MIT License](https://github.com/OZX-OG/JobPortal-django/blob/master/LICENSE)
