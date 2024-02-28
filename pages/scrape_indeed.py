@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 from random import randint
 from .models import Job, Location, Source, Scrape
+from webdriver_manager.chrome import ChromeDriverManager
 
 scroll_js = "window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });"
 country_locations = {'United States':'www', 'Germany':'de', 'spain':'es', 'United Kingdom':'uk', 'portugal':'pt', 'france':'fr', 'United Arab Emirates':'ae'}
@@ -20,8 +21,7 @@ options = webdriver.ChromeOptions()
 options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36')
 options.add_argument('--headless')
 
-driver_path = 'C:/Program Files (x86)/chromedriver.exe'
-driver = webdriver.Chrome(service=ChromeService(executable_path=driver_path), options=options)
+driver = webdriver.Chrome(service=ChromeService(executable_path=ChromeDriverManager().install()), options=options)
 # driver.get(url)
     
 """

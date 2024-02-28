@@ -5,14 +5,14 @@ from bs4 import BeautifulSoup
 from time import sleep
 from random import randint
 from .models import Job
+from webdriver_manager.chrome import ChromeDriverManager
 
 scroll_js = "window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });"
 
 options = webdriver.ChromeOptions()
 options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36')
-# options.add_argument('--headless')
-driver_path = 'C:/Program Files (x86)/chromedriver.exe'
-driver = webdriver.Chrome(service=ChromeService(executable_path=driver_path), options=options)
+options.add_argument('--headless')
+driver = webdriver.Chrome(service=ChromeService(executable_path=ChromeDriverManager().install()), options=options)
 
 #### linkedin ####
 def get_topInfo(page):

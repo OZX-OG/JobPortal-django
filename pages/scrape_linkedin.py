@@ -1,4 +1,3 @@
-print("bsmlah")
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -9,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 from random import randint
 from .models import Job, Location, Source, Scrape
+from webdriver_manager.chrome import ChromeDriverManager
 
 scroll_js = "window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });"
 country_locations = ['Germany', 'spain', 'United States', 'portugal', 'United Kingdom', 'france', 'United Arab Emirates', 'russia']
@@ -21,8 +21,7 @@ remote = '&f_WT=2'
 options = webdriver.ChromeOptions()
 options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36')
 options.add_argument('--headless')
-driver_path = 'C:/Program Files (x86)/chromedriver.exe'
-driver = webdriver.Chrome(service=ChromeService(executable_path=driver_path), options=options)
+driver = webdriver.Chrome(service=ChromeService(executable_path=ChromeDriverManager().install()), options=options)
 
 # url = f'https://www.linkedin.com/jobs/search/?f_TPR=r86400&keywords=django&location={ country_locations[scrape_index.loc_linkedin_indx] }{remote}'
 # driver.get(url)
