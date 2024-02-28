@@ -69,6 +69,30 @@ python manage.py runserver
 
 8. Access the Portal:
 Open a web browser and navigate to the URL displayed in the terminal where the Django server is running:
+
+## Celery Configuration & Scraping :
+
+1. **Update CELERY_BROKER_URL:**
+   - In `settings.py`, update the `CELERY_BROKER_URL` with the URL provided by  [Railway](https://railway.app/).
+     ```python
+     CELERY_BROKER_URL = 'redis://default:NhmAigipb1kn3el1N4DaDEpnl1PpNcCe@viaduct.proxy.rlwy.net:39379'
+     ```
+
+2. **Start Celery Worker:**
+   - Open a command prompt and run the following command to start the Celery worker:
+     ```
+     celery -A JobPortal worker -l INFO --without-gossip --without-mingle --without-heartbeat -Ofair --pool=solo
+     ```
+
+3. **Scraping Data with Selenium:**
+   - To initiate scraping data with Selenium, use the following URLs:
+     - `/scrape_linkedin/`: Scrapes job listings from LinkedIn.
+     - `/scrape_indeed/`: Scrapes job listings from Indeed.
+     - `/clear/`: Clears all unavailable jobs from both LinkedIn and Indeed.
+
+Now your Celery worker is up and running, and you can start scraping data by accessing the provided URLs.
+:
+
 ## API Information:
 
 1. **Random Job Endpoint:**
