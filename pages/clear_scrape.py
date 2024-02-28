@@ -138,22 +138,23 @@ def clear_indeed(all_job_link):
 
 #### indeed ####
 
-linkedin_link = []
-indeed_link = []
+def main():
+    linkedin_link = []
+    indeed_link = []
 
-all_jobs = Job.objects.all()
-all_job_link = [job.job_link.strip() for job in all_jobs if job.job_link]
+    all_jobs = Job.objects.all()
+    all_job_link = [job.job_link.strip() for job in all_jobs if job.job_link]
 
-for job_link in all_job_link:
-    if 'indeed.com' in job_link:
-        indeed_link.append(job_link)
+    for job_link in all_job_link:
+        if 'indeed.com' in job_link:
+            indeed_link.append(job_link)
 
-    elif 'linkedin.com' in job_link:
-        linkedin_link.append(job_link)
+        elif 'linkedin.com' in job_link:
+            linkedin_link.append(job_link)
 
-    
-clear_indeed(indeed_link)
-clear_linkedin(linkedin_link)
+        
+    clear_indeed(indeed_link)
+    clear_linkedin(linkedin_link)
 
 
 

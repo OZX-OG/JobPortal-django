@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.http.response import JsonResponse
 from django.core.paginator import Paginator
 from django.db.models import Q
 
-from .models import Job, Source, Location, Scrape
-from .task import scrape_and_update_jobs, clear_jobs_fromDB
+from .models import Job, Source, Location
+from .task import scrape_indeed, scrape_linkedin, clear_jobs_fromDB
 
 # Create your views here.
 def index(request): 
@@ -95,17 +94,19 @@ def job_details(request, slug):
     return render(request, 'pages/job_details.html', context)
 
 
-def scrapee(request): 
+def scrape_linkedin_jobs(request): 
+    scrape_linkedin.delay()
+    return HttpResponse("start scraping jobs fron Linkedin")
 
-    scrape_and_update_jobs.delay()
-    return HttpResponse("lets go")
+def scrape_indeed_jobs(request): 
+    scrape_indeed.delay()
+    return HttpResponse("start scraping jobs fron Indeed")
+
 def clear_scrape(request): 
-    job = Job.objects.get( job_link="https://www.indeed.com/rc/clk?jk=04124bb6a0078610&bb=e2N3YGMUD3ubfZL4qayFDz2746aiTyzUrR0gUIFus-HzbjQO6hf-V0nwOU2pRqPcNGgqqcjRhFS2rErgYVyYQwZtdcue0LUs2aCU-QEmLus%3D&xkcb=SoDZ67M3F4HFfPwjlB0IbzkdCdPP&fccid=f2c8db2d75b00437&vjs=3" )
-    print(job)
-
-
     clear_jobs_fromDB.delay()
-    return HttpResponse("lets go clear")
+    return HttpResponse("Clear all The unavailable jobs, from Linkedin and Indeed")
+
+
 # def job_details(request):
 
 
