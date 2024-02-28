@@ -42,14 +42,15 @@ virtualenv venv
 
 5. Activate the Virtual Environment:
 
-- On Windows:
-```bash
-venv\Scripts\activate
-```
-- On Unix or MacOS::
-```bash
-source venv/bin/activate
-```
+   - On Windows:
+      ```bash
+      venv\Scripts\activate
+      ```
+      
+   - On Unix or MacOS::
+      ```bash
+      source venv/bin/activate
+      ```
 
 6. Install the required packages:
 
