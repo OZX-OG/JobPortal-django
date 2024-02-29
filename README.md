@@ -104,7 +104,7 @@ Now your Celery worker is up and running, and you can start scraping data by acc
        "title": "{{ Job Title }}",
        "company": "{{ Company Name }}",
        "link": "{{ Job Link }}",
-       "salary": "Not specified",
+       "salary": "{{ salary }}",
        "specific_location": "{{ Location }}",
        "publish_date": "{{ Publish Date }}"
      }
@@ -129,7 +129,7 @@ Now your Celery worker is up and running, and you can start scraping data by acc
        "job_link": "{{ Job Link }}",
        "company_url": "{{ Company URL }}",
        "image_url": "{{ Image URL }}",
-       "salary": "Not specified",
+       "salary": "{{ salary }}",
        "specific_location": "{{ Location }}",
        "applications": "{{ Applications }}",
        "seniority_level": "{{ Seniority Level }}",
